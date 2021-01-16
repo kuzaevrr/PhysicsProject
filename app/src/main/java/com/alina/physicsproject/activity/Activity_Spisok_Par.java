@@ -39,7 +39,7 @@ public class Activity_Spisok_Par extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_paragraph_text_info);
 
-        {
+        { //блок инициализации (для повышкения читаемости) ;)
             tx = findViewById(R.id.textItem);
             ll = findViewById(R.id.llMAin);
             loginName = getIntent().getStringExtra("userName");
