@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.alina.physicsproject">
+	
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+	
+ <application
+        android:screenOrientation="portrait"
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher_molekula"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/icon_app_foreground"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+        <activity android:name=".activity.SignIn"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.TestActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.Activity_Spisok_Par"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.Paragraph"
+            android:screenOrientation="portrait"/>
+     <activity
+            android:name=".activity.MainActivity"
+            android:label="@string/title_activity_six"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+     <activity
+            android:name=".activity.Spravka"
+            android:label="@string/title_activity_five"
+            android:screenOrientation="portrait"/>
+     <activity
+            android:name=".activity.Lk"
+            android:label="@string/title_activity_seven"
+            android:screenOrientation="portrait"/>
+ </application>
+
+</manifest>

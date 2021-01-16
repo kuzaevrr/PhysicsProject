@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/test_image_layout"
+    tools:context=".activity.Activity_Spisok_Par"
+    android:id="@+id/spisok_par"
+    android:screenOrientation="portrait"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:orientation="horizontal"
+        android:layout_marginTop="15sp"
+        android:layout_marginLeft="40sp"
+        android:layout_marginRight="40sp">
+
+        <Button
+            android:id="@+id/planFr"
+            style="Widget.Holo.Light.Button.Borderless.Small"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="сhanges"
+            android:text="@string/activity_paragraph_text_info_plan"
+            android:background="@drawable/drawable_style_button"
+            />
+
+
+
+        <Button
+            android:id="@+id/textFr"
+            style="Widget.Holo.Light.Button.Borderless.Small"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="сhanges"
+            android:background="@drawable/drawable_style_button"
+            android:text="@string/activity_paragraph_text_info_text"/>
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/infroFr"
+        style="Widget.Holo.Light.Button.Borderless.Small"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="40sp"
+        android:layout_marginLeft="40sp"
+        android:onClick="сhanges"
+        android:background="@drawable/drawable_style_button"
+        android:text="@string/activity_paragraph_text_info_infograph"/>
+    <TextView
+        android:id="@+id/textItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10sp"
+        android:layout_marginRight="40sp"
+        android:layout_marginLeft="40sp"
+        android:text="@string/itemString"
+        android:textSize="23sp"
+        android:gravity="center"
+        android:textStyle="bold"
+
+        >
+    </TextView>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="30sp">
+
+        <LinearLayout
+            android:id="@+id/llMAin"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20sp"
+            android:layout_marginLeft="20sp"
+            android:layout_marginEnd="20sp"
+            android:layout_marginRight="20sp"
+            android:orientation="vertical"
+            tools:ignore="ScrollViewSize">
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

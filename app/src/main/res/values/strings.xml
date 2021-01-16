@@ -1,0 +1,76 @@
+<resources>
+    <string name="app_name">Физика 7 класс</string>
+
+    <string name="welcome_text"><p align="justify">Текст</p></string>
+
+    <string name="itemString">Текст</string>
+    <string name="title_activity_ten">Авторизация пользователя</string>
+    <string name="title_activity_second">Закон Архимеда</string>
+    <string name="title_activity_three">История об Архимеде</string>
+    <string name="title_activity_four">Тест</string>
+    <string name="title_activity_five">Справка</string>
+    <string name="title_activity_six">Физика 7 класс. Оглавление</string>
+    <string name="title_activity_seven">Личный кабинет</string>
+    <string name="title_activity_eight"> Домашний эксперимент №1</string>
+    <string name="title_activity_nine"> Домашний эксперимент №2</string>
+    <string name="title_activity_eleven"> Интерактивный опыт</string>
+    <string name="title_activity_twelve"> Интерактивный опыт</string>
+    <string name="title_activity_thirteen"> Домашний физический эксперимент №1("Шар в воде")</string>
+    <string name="title_activity_fourteen"> Домашний физический эксперимент №2("Картезианский водолаз")</string>
+    <string name="userName">Cарманаева Алина Ринатовна</string>
+
+    <string name="about_text20">
+        \u0020\u0020Уважаемый пользователь!\n
+        \u0020\u0020Данное приложение разработано как дополнение к учебнику по физике.  В нем ты можешь изучить или же повторить материал. Текст параграфа составлен на основе обобщенного плана по изучению закона. Для закрепления полученных знаний тебе предоставляется возможность пройти тест. Ты можешь просмотреть видео "Сила Архимеда", нажав на портрет Архимеда.\n
+    \u0020 \u0020 Для создания данного приложение использовались:\n
+    \u0020 \u0020 1. Картинки \n https://ds04.infourok.ru/uploads/ex/05a7/000d388e-bbbc4043/640/img6.jpg\n
+       https://ds04.infourok.ru/uploads/ex/03ab/0001c4e2-9161712b/img8.jpg\n
+        https://bigslide.ru/images/33/32550/960/img4.jpg\n
+        https://ds03.infourok.ru/uploads/ex/0c40/000501c7-c167e1e9/3/img9.jpg\n
+        https://images.myshared.ru/19/1231754/slide_3.jpg\n
+        https://moziru.com/images/blackboard-clipart-owl-5.jpg\n
+        https://1000sovetov.ru/uploads/images/xKK5HGj2S9Pvpu8gkm6SQ3NcWZtF8RLOH.jpg.pagespeed.ic.wJTVQ2L2aJ.jpg\n
+        https://mirpps.ru/assets/media/fon-dlja-prezentacii/0079.jpg\n
+        https://png.pngtree.com/element_origin_min_pic/16/12/04/0e9b0043f4da4fac1c4ed26b55df4b29.jpg\n
+        \u0020 \u0020 2. Видеоролик (Союз Мультфильм) \n https://youtu.be/1_qVgzpHxyI\n
+        \u0020 \u0020 3. Тест (составлен из пособия А.В  Чеботаревой) \n  https://www.alleng.ru/d/phys/phys274.htm
+   </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="activity_main_study">Ученик:</string>
+    <string name="activity_main_item_one">Введение</string>
+    <string name="activity_main_item_two">Первоначальные сведения о строении вещества.</string>
+    <string name="activity_main_item_three">Взаимодействие тел.</string>
+    <string name="activity_main_item_fo">Давление твердых тел, жидкостей и газов.</string>
+    <string name="activity_main_item_five">Работа и мощность. Энергия</string>
+    <string name="activity_main_authorization">Авторизация</string>
+    <string name="activity_main_reference">Справка</string>
+    <string name="activity_main_personal_area">Личный кабинет</string>
+    <string name="activity_paragraph_name_list">Список параграфов</string>
+    <string name="activity_sign_in_authorization">Авторизоваться</string>
+    <string name="activity_sign_log_out">Выйти</string>
+    <string name="activity_sign_hint_user_mail">Почта ученика</string>
+    <string name="activity_sign_hint_user_name">Имя ученика (Фамилия Имя)</string>
+    <string name="activity_paragraph_text_info_plan">План</string>
+    <string name="activity_paragraph_text_info_text">Текст</string>
+    <string name="activity_paragraph_text_info_infograph">Инфрографика</string>
+    <string name="activity_test_completion_test">Завершить тест!</string>
+    <string name="activity_test_name_test">Тест</string>
+    <string name="activity_lk_task_list">Список решеных задач.</string>
+    <string name="no_user_login">Не авторизован!</string>
+    <string name="activity_test_name_to_test">Тест на тему: </string>
+    <!--Пароли и логины)) так удобнее!-->
+    <string name="result_test_studs_to_mail">kuzaevrr9@gmail.com</string>
+    <string name="mail_dispatch">kuzaevrr@mail.ru</string>
+    <string name="password_mail_dispatch">Elektrik16.</string>
+
+    <string name="appraisal_five">Отлично</string>
+    <string name="appraisal_fo">Хорошо</string>
+    <string name="appraisal_three">Удволетворительно</string>
+    <string name="appraisal_two">Неудволетворительно</string>
+    <string name="text_to_appraisal">Тест решен на оценку: \n</string>
+<!--Расшифровка ошибок-->
+    <string name="error_501">Ошибка 501</string> <!--Нет файлов (папки), для генерации парагрофа-->
+
+</resources>

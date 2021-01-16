@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/wer"
+    tools:context=".activity.Activity_Spisok_Par"
+    android:id="@+id/spisok_par"
+    android:screenOrientation="portrait"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:orientation="horizontal"
+        android:layout_marginTop="15sp"
+        android:layout_marginLeft="25sp"
+        android:layout_marginRight="25sp">
+
+        <Button
+            android:id="@+id/planFr"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="сhanges"
+            android:text="План"></Button>
+
+        <Button
+            android:id="@+id/infroFr"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="сhanges"
+            android:text="Инфрографика"></Button>
+
+        <Button
+            android:id="@+id/textFr"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="сhanges"
+            android:text="Текст"></Button>
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/textItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10sp"
+        android:layout_marginRight="40sp"
+        android:layout_marginLeft="40sp"
+        android:text="@string/itemString"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:textStyle="bold"
+        >
+    </TextView>
+
+
+
+
+
+
+</LinearLayout>
