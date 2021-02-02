@@ -99,7 +99,7 @@ public class Activity_Spisok_Par extends AppCompatActivity {
         ImageView ivNew = new ImageView(this);
         ivNew.setAdjustViewBounds(true);
         ivNew.setImageDrawable(d);
-        ivNew.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//        ivNew.setScaleType(ImageView.ScaleType.CENTER_CROP);
         ll.addView(ivNew, layoutParams);
     }
 

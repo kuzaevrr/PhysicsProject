@@ -1,9 +1,7 @@
 package com.alina.physicsproject.activity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -21,26 +19,26 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.alina.physicsproject.R;
+import com.alina.physicsproject.data.object.AnswerTable;
+import com.alina.physicsproject.data.viewModels.AnswerViewModel;
 import com.alina.physicsproject.sendMail.SendMail;
-import com.alina.physicsproject.dbHepler.DBHelper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.file.FileAlreadyExistsException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 
-import static com.alina.physicsproject.dbHepler.DBHelper.NAME_PARAGRAPH;
-import static com.alina.physicsproject.dbHepler.DBHelper.STRING_APRAISAL;
-import static com.alina.physicsproject.dbHepler.DBHelper.Table_Answer;
+public class TestActivity extends AppCompatActivity {
 
-
-public class TestActivity extends Activity {
     private Button btNext, btBack, Answer, buttonResult;
     private EditText editTextV;
     private ImageView imageTest;
@@ -59,6 +57,7 @@ public class TestActivity extends Activity {
     private HashMap<Integer, String> imageQuestion; //картинка в вопросе
     private HashMap<String, String> hashMap;
 
+    private AnswerViewModel answerViewModel;
     private List<Integer> score; //позиция выбора цвета
     private int scoreSP = 0;
     private String loginName;
@@ -69,24 +68,24 @@ public class TestActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {//Меттод активити
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test2);
+        setContentView(R.layout.activity_test);
 
         {
             score = new ArrayList<>();
             hashMap = new HashMap<>();
             listQuestion = new ArrayList<>();
             imageQuestion = new HashMap<>();
-            btNext =  findViewById(R.id.buttonNext);
-            btBack =  findViewById(R.id.buttonBack);
-            tx =  findViewById(R.id.oglTest);
-            linearLayout =  findViewById(R.id.layoutTest);
-            lvO =  findViewById(R.id.listO);
-            txV =  findViewById(R.id.vopros);
-            buttonResult =  findViewById(R.id.buttonResult);
-            seekBar =  findViewById(R.id.seekBar);
-            resTestView =  findViewById(R.id.textViewResult);
-            imageTest =  findViewById(R.id.imageVopros);
 
+            btNext = findViewById(R.id.buttonNext);
+            btBack = findViewById(R.id.buttonBack);
+            tx = findViewById(R.id.oglTest);
+            linearLayout = findViewById(R.id.layoutTest);
+            lvO = findViewById(R.id.listO);
+            txV = findViewById(R.id.vopros);
+            buttonResult = findViewById(R.id.buttonResult);
+            seekBar = findViewById(R.id.seekBar);
+            resTestView = findViewById(R.id.textViewResult);
+            imageTest = findViewById(R.id.imageVopros);
             hashMap.put("0", "а");
             hashMap.put("1", "б");
             hashMap.put("2", "в");
@@ -95,6 +94,7 @@ public class TestActivity extends Activity {
             hashMap.put("5", "е");
             buttonResult.setClickable(false);
             buttonResult.setVisibility(View.INVISIBLE);
+            answerViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication())).get(AnswerViewModel.class);
         }
 
 
@@ -120,7 +120,7 @@ public class TestActivity extends Activity {
 
     public void newSeekbar() {
         seekBar.setMax(textTypeQuestion.size() - 1);
-        seekBar.setOnTouchListener(new View.OnTouchListener(){
+        seekBar.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 return true;
@@ -133,17 +133,12 @@ public class TestActivity extends Activity {
     }
 
     public void check(int position, View view, List<Integer> ix) { //Отображения цветового ответа списка
-
         if (score.get(position) == 0) {
-
             view.setBackgroundColor(Color.rgb(195, 213, 255));
-//            ix[position] = view.getId();
             ix.add(view.getId());
             score.add(position, 1);
         } else if (score.get(position) == 1) {
-
             view.setBackgroundColor(Color.TRANSPARENT);
-//            ix[position] = view.getId();
             ix.add(view.getId());
             score.add(position, 0);
         }
@@ -157,7 +152,7 @@ public class TestActivity extends Activity {
                     res = "а)";
                     break;
                 case "1":
-                    res = "б";
+                    res = "б)";
                     break;
                 case "2":
                     res = "в)";
@@ -177,9 +172,9 @@ public class TestActivity extends Activity {
                         "В данном вопросе выбран ответ: " + res, Toast.LENGTH_SHORT);
                 toast.show();
             } else if (typeQuestion.get(scoreSP).equals("2")) {
-                Toast toast1 = Toast.makeText(getApplicationContext(),
+                Toast toast = Toast.makeText(getApplicationContext(),
                         "В данном вопросе выбран ответ: " + position, Toast.LENGTH_SHORT);
-                toast1.show();
+                toast.show();
             }
         }
     }
@@ -210,10 +205,11 @@ public class TestActivity extends Activity {
     public void newImage(Drawable drawable) {
         imageTest.setAdjustViewBounds(true);
         imageTest.setImageDrawable(drawable);
-        imageTest.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//        imageTest.setScaleType(ImageView.ScaleType.CENTER_CROP);
     }
 
     public void logicSp(final List<String> list, String stringV) {//Логика отоброжения вопроса!!!
+
 
         deletedView();
         seekBar.setProgress(scoreSP);
@@ -253,14 +249,15 @@ public class TestActivity extends Activity {
                 list
         );
 
-        testTypeTwo(); //Создание вопроса второго типа
 
+        testTypeTwo(); //Создание вопроса второго типа
         txV.setText(stringV);
         txV.setTextSize(18); //размер текста вопроса
 
         for (int i = 0; i < listQuestion.get(scoreSP).size(); i++) { //заполненеие листа
             score.add(0);
         }
+
 
         lvO.setAdapter(adapter);
         lvO.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -270,14 +267,8 @@ public class TestActivity extends Activity {
                 if (scoreSP + 1 == textTypeQuestion.size()) { //активация кнопки завершить тест!
                     buttonResult.setClickable(true);
                 }
-                    List<Integer> ix = new ArrayList<>();
-//                int[] ix = new int[(int)id];   //булево нажатие 0 или 1,
-//                int[] ix = new int[listQuestion.get(position).size()];   //булево нажатие 0 или 1,
-                for (List<String> lists: listQuestion){
-                    for (String ss: lists){
-                        Log.i("!!!!!!!!!!!!", ss);
-                    }
-                }
+                List<Integer> ix = new ArrayList<>();
+
                 listQuestionAnswer[scoreSP] = Integer.toString(position);
                 check(position, view, ix);
 
@@ -391,23 +382,8 @@ public class TestActivity extends Activity {
             resTestView.setText(getString(R.string.text_to_appraisal) + getString(R.string.appraisal_two));
         }
 
-        DBHelper dbHelper = new DBHelper(this);
-        SQLiteDatabase database = dbHelper.getWritableDatabase();
-
-        database.execSQL("Insert into " + Table_Answer + " (" + NAME_PARAGRAPH + "," +
-                STRING_APRAISAL + ") VALUES (" + "'" +
-                message + "'" + "," + "'" + appraisal + "'" + ");"
-        );
-/*
-        query() - чтение
-        insert() - добавление
-        delete() - удаление
-        update() - изменение
-        execSQL() любой код SQL
-*/
+        answerViewModel.insertAnswer(new AnswerTable(message, appraisal));
         sendEmail();
-        database.close();
-        dbHelper.close();
         btBack.setClickable(false);
         buttonResult.setClickable(false);
     }
@@ -420,7 +396,16 @@ public class TestActivity extends Activity {
         String messages = "Тема: " + message + "\nУченик: " + loginName + "\n" + "Оценка " + appraisalNumb +
                 " (" + appraisal + ")\n";
         //Creating SendMail object
-        new SendMail(this, email, subject, messages).execute();
+        boolean keyFinish = false;
+        try {
+            keyFinish = new SendMail(this, email, subject, messages).execute().get();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
         //Executing sendmail to send email
+//        if(keyFinish){
+//            Toast.makeText(this, "Оценка за тест: "+ appraisalNumb, Toast.LENGTH_SHORT).show();
+//            finish();
+//        }
     }
 }

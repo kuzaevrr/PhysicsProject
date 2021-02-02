@@ -1,32 +1,30 @@
 package com.alina.physicsproject.activity;
 
 import android.app.AlertDialog;
-import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.alina.physicsproject.R;
+import com.alina.physicsproject.data.object.SignTable;
+import com.alina.physicsproject.data.viewModels.SignViewModel;
 import com.alina.physicsproject.sendMail.SendMail;
-import com.alina.physicsproject.dbHepler.DBHelper;
 
+import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.alina.physicsproject.dbHepler.DBHelper.KEY_MAIL;
-import static com.alina.physicsproject.dbHepler.DBHelper.KEY_NAME;
-import static com.alina.physicsproject.dbHepler.DBHelper.Table_Sign;
 
 
 public class SignIn extends AppCompatActivity {
@@ -35,6 +33,9 @@ public class SignIn extends AppCompatActivity {
     private boolean boolClickOpenKey;
     private String loginNameIsMain;
     private String genPassword;
+    private SignViewModel signViewModel;
+    private String nameUserS;
+    private String mailUserS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class SignIn extends AppCompatActivity {
             mailUser = (EditText) findViewById(R.id.userMail); //маил юзера (editText)
             upButton = (Button) findViewById(R.id.signup);
             signOutput = (Button) findViewById(R.id.signOutput);
+            signViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication())).get(SignViewModel.class);
         }
 
         //проверка активации
@@ -52,34 +54,29 @@ public class SignIn extends AppCompatActivity {
     }
 
     public void checkAuthorization() {
-        DBHelper dbHelper = new DBHelper(this);
-        SQLiteDatabase database = dbHelper.getWritableDatabase();
-
-        String nameUserS = null;
-        String mailUserS = null;
-        Cursor myCursor = database.query(Table_Sign, null, null, null, null, null, null);
-        while (myCursor.moveToNext()) {
-            Log.d("SQLSIGNInput", myCursor.getString(0) + "|" + myCursor.getString(1));
-            nameUserS = myCursor.getString(0);
-            mailUserS = myCursor.getString(1);
-        }
-        if (nameUserS != null) {
-            upButton.setEnabled(false);
-            signOutput.setEnabled(true);
-            nameUser.setHint(nameUserS);
-            mailUser.setHint(mailUserS);
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    "Вы авторизованы!", Toast.LENGTH_SHORT);
-            toast.show();
-            //отключение кнпоки при авторизации
-        } else {
-            signOutput.setEnabled(false);
-            upButton.setEnabled(true);
-        }
-        myCursor.close();
-        database.close();
-        dbHelper.close();
-
+        LiveData<List<SignTable>> listLiveData = signViewModel.getListLiveData();
+        listLiveData.observe(this, new Observer<List<SignTable>>() {
+            @Override
+            public void onChanged(List<SignTable> signTables) {
+                if (signTables.size() > 0) {
+                    nameUserS = signTables.get(0).getUserName();
+                    mailUserS = signTables.get(0).getUserMail();
+                }
+                if (nameUserS != null) {
+                    upButton.setEnabled(false);
+                    signOutput.setEnabled(true);
+                    nameUser.setHint(nameUserS);
+                    mailUser.setHint(mailUserS);
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Вы авторизованы!", Toast.LENGTH_SHORT);
+                    toast.show();
+                    //отключение кнпоки при авторизации
+                } else {
+                    signOutput.setEnabled(false);
+                    upButton.setEnabled(true);
+                }
+            }
+        });
     }
 
     public void signUp(View v) {
@@ -144,11 +141,15 @@ public class SignIn extends AppCompatActivity {
     }
 
     public void deletedUserIsDB() {
-        DBHelper dbHelper = new DBHelper(this);
-        SQLiteDatabase database = dbHelper.getWritableDatabase();
-        database.delete(Table_Sign, null, null);
-        dbHelper.close();
-        database.close();
+        LiveData<List<SignTable>> listLiveData = signViewModel.getListLiveData();
+        listLiveData.observe(this, new Observer<List<SignTable>>() {
+            @Override
+            public void onChanged(List<SignTable> signTables) {
+                if (signTables.size() > 0) {
+                    signViewModel.deleteSign(signTables.get(0));
+                }
+            }
+        });
     }
 
 
@@ -187,27 +188,11 @@ public class SignIn extends AppCompatActivity {
 
 
     public void insertDB() {
-        DBHelper dbHelper = new DBHelper(this);
-        SQLiteDatabase database = dbHelper.getWritableDatabase();
-
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(KEY_NAME, nameUser.getText().toString().trim());
-        contentValues.put(KEY_MAIL, mailUser.getText().toString().trim());
-        database.insert(Table_Sign, null, contentValues);
-
-        dbHelper.close();
+        signViewModel.insertSign(new SignTable(nameUser.getText().toString().trim(), mailUser.getText().toString().trim()));
     }
 
-    public void selectDBToNameUser(){
-        DBHelper dbHelper = new DBHelper(this);
-        SQLiteDatabase database = dbHelper.getWritableDatabase();
-        Cursor myCursor = database.query(Table_Sign, null, null, null, null, null, null);
-        while (myCursor.moveToNext()) {
-            loginNameIsMain = myCursor.getString(0);
-        }
-        myCursor.close();
-        dbHelper.close();
-        database.close();
+    public void selectDBToNameUser() {
+        loginNameIsMain = nameUser.getText().toString().trim();
     }
 
     @Override

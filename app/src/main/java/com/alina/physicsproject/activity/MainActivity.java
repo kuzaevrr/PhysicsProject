@@ -2,9 +2,6 @@ package com.alina.physicsproject.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,9 +10,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.alina.physicsproject.R;
-import com.alina.physicsproject.dbHepler.DBHelper;
+import com.alina.physicsproject.data.object.SignTable;
+import com.alina.physicsproject.data.viewModels.SignViewModel;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,8 +24,6 @@ import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.alina.physicsproject.dbHepler.DBHelper.Table_Sign;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -35,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private final ArrayList<String> result = new ArrayList<>();
     private final List<List<String>> listListTwoOGLResTextOGL = new ArrayList<>();
     private final List<List<String>> listListOneOGLResTextOGL = new ArrayList<>();
-
+    private SignViewModel signViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
             Archimedes = (Button) findViewById(R.id.button17);
             vved = (Button) findViewById(R.id.button19);
             nameMailUser = (TextView) findViewById(R.id.userNameMail);
+            signViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication())).get(SignViewModel.class);
         }
         typeInit();
         checkLoginPassword(); //метод проверки содержания логина и пароля
@@ -56,62 +56,54 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     public void checkLoginPassword() {
-        SQLiteDatabase database = new DBHelper(this).getWritableDatabase();
-        try {
-           @SuppressLint("Recycle") Cursor myCursor = database.query(Table_Sign, null, null, null, null, null, null);
-            while (myCursor.moveToNext()) {
-                loginName = myCursor.getString(0);
-                tvView.setText(getString(R.string.activity_main_study) + " " + loginName);
+        LiveData<List<SignTable>> listLiveData = signViewModel.getListLiveData();
+        listLiveData.observe(this, new Observer<List<SignTable>>() {
+            @Override
+            public void onChanged(List<SignTable> signTables) {
+                if (signTables.size() > 0) {
+                    loginName = signTables.get(0).getUserName();
+                    tvView.setText(getString(R.string.activity_main_study) + " " + loginName);
+                }
             }
-        } catch (SQLiteException e) {
-            e.printStackTrace();
-        }
-        database.close();
+        });
     }
 
     public void signIn(View v) { //обработчик для кнопки "АВТОРИЗАЦИЯ"
-        Intent intObj = new Intent(this, SignIn.class);
-        startActivity(intObj);
+
+        startActivity(new Intent(this, SignIn.class));
     }
 
     public void buttonVV(View v) {//КНопка для парагарафа
-        Intent intObj = new Intent(this, Paragraph.class);
         index = "0";
-        intentRequest(intObj);
+        intentRequest(new Intent(this, Paragraph.class));
     }
 
     public void newScreenOne(View v) {//КНопка для парагарафа
-        Intent intObj = new Intent(this, Paragraph.class);
         index = "1";
-        intentRequest(intObj);
+        intentRequest(new Intent(this, Paragraph.class));
     }
 
     public void newScreenTwo(View v) {//КНопка для парагарафа
-        Intent intObj = new Intent(this, Paragraph.class); //SecondActivity
         index = "2";
-        intentRequest(intObj);
+        intentRequest(new Intent(this, Paragraph.class));
     }
 
     public void newScreenThree(View v) {//КНопка для парагарафа
-        Intent intObj = new Intent(this, Paragraph.class);
         index = "3";
-        intentRequest(intObj);
+        intentRequest(new Intent(this, Paragraph.class));
     }
 
     public void newScreenFo(View v) {//КНопка для парагарафа
-        Intent intObj = new Intent(this, Paragraph.class);
         index = "4";
-        intentRequest(intObj);
+        intentRequest( new Intent(this, Paragraph.class));
     }
 
     public void newScreenSpravka(View v) { //КНопка для справки
-        Intent intObj = new Intent(this, Spravka.class);
-        startActivity(intObj);
+        startActivity(new Intent(this, Spravka.class));
     }
 
     public void lk(View v) { //кнопка личный кабинет
-        Intent intObj = new Intent(this, Lk.class);//Lk
-        startActivity(intObj);
+        startActivity(new Intent(this, Lk.class));
     }
 
     @SuppressLint("SetTextI18n")

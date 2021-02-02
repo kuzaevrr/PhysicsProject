@@ -23,7 +23,7 @@ import javax.mail.internet.MimeMessage;
 import static android.provider.ContactsContract.Intents.Insert.EMAIL;
 import static android.provider.Telephony.Carriers.PASSWORD;
 
-public class SendMail extends AsyncTask<Void, Void, Void> {
+public class SendMail extends AsyncTask<Void, Void, Boolean> {
 
 
     @SuppressLint("StaticFieldLeak")//хз, что за аннатация)))
@@ -43,7 +43,10 @@ public class SendMail extends AsyncTask<Void, Void, Void> {
         this.email = email;
         this.subject = subject;
         this.message = message;
+
     }
+
+
 
     @Override
     protected void onPreExecute() {
@@ -53,13 +56,13 @@ public class SendMail extends AsyncTask<Void, Void, Void> {
     }
 
     @Override
-    protected void onPostExecute(Void aVoid) {
+    protected void onPostExecute(Boolean aVoid) {
         super.onPostExecute(aVoid);
         progressDialog.dismiss();
     }
 
     @Override
-    protected Void doInBackground(Void... params) {
+    protected Boolean doInBackground(Void... params) {
         //Creating properties
         Properties props = new Properties();
 
@@ -100,6 +103,6 @@ public class SendMail extends AsyncTask<Void, Void, Void> {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-        return null;
+        return true;
     }
 }
